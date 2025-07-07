@@ -1,0 +1,63 @@
+package com.scb.rules
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import com.scb.spring.jpa.postgresql.model.InterestRateRequest;
+import com.scb.spring.jpa.postgresql.model.LoanType;
+
+/* ---------- helper ---------- */
+function BigDecimal baselineForScore(int score) {
+    if (score >= 800) return BigDecimal.valueOf(8.90);
+    if (score >= 750) return BigDecimal.valueOf(9.20);
+    if (score >= 700) return BigDecimal.valueOf(10.00);
+    return BigDecimal.valueOf(11.50);
+}
+
+/* ---------- rules ---------- */
+
+/*  baseline from credit score */
+rule "baseline"
+salience 100
+when
+    $r : InterestRateRequest( rate == null )
+then
+    $r.setRate( baselineForScore($r.getCreditScore()) );
+end
+
+/* secured-loan discount (-0.30 %) */
+rule "secured discount"
+when
+    $r : InterestRateRequest( loanType == LoanType.SECURED )
+then
+    $r.setRate( $r.getRate().subtract( BigDecimal.valueOf(0.30) ) );
+end
+
+/* market spread 0.5 × (market – 8.0) */
+rule "market spread"
+when
+    $r : InterestRateRequest( )
+then
+    BigDecimal spread = $r.getMarketBaseRate()
+                          .subtract( BigDecimal.valueOf(8.0) )
+                          .multiply( BigDecimal.valueOf(0.5) );
+    $r.setRate( $r.getRate().add(spread) );
+end
+
+/*   risk adjustment for score < 800 → (1 − riskScore) × 1.5 */
+rule "risk adj"
+when
+    $r : InterestRateRequest( creditScore < 800 )
+then
+    BigDecimal adj = BigDecimal.ONE.subtract($r.getRiskScore())
+                                   .multiply(BigDecimal.valueOf(1.5));
+    $r.setRate( $r.getRate().add(adj) );
+end
+
+/* final rounding */
+rule "round to 2 dp"
+salience -100
+when
+    $r : InterestRateRequest()
+then
+    $r.setRate( $r.getRate().setScale(2, RoundingMode.HALF_UP) );
+end
