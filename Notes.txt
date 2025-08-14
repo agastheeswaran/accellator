@@ -1,0 +1,50 @@
+Wallet : 
+Profile to have one Main account and  multiple sub accounts Entitled to various entities.  Each account is linked to wallet. 
+Each wallet to have both Cash account and token account. 
+Hybrid Wallet to have both Cash Account and Tokens Linked to various entities. 
+Default Account opens with Zero values , And initial Values/Expenses is accounted to the account. 
+As value is grow the account is also updated for the same , if applicable. else end of lifecycle the value is updated.  
+Value growth is computed through smart contract , Integrated with Lifecycle management. 
+Both expense and New Estimated value is computed using the Lifecycle Management. 
+Once the entity is closed, related account is also closed. Grace period for any pending transactions. 
+Wallet token and Cash balance needs to be cleared before closing the wallet. 
+
+Tokenisation : 
+Token is issue on exchange of value with proper value encoding and Expected estimate value. 
+Token is issues based on the standardized values or quantities based on the type. 
+Token is capable of further slicing into smaller chunks with the parent token reference. 
+Inter exchange of Token To Cash is allowed . Cash to Token is allowed on purchase . 
+Token to have quality and pricing parameters . 
+Token value have depreciation calculation also. 
+All tokens linked to Account needs to be closed before closing the wallet. 
+
+Smart contract : 
+Proposed value computation. 
+Potential growth over time. 
+What is the agreed term on sale and dispose. 
+Partnership  and distribution between parties. 
+Control over event. 
+Collaboration with third party and banks. 
+Terms during the Exit agreement. 
+
+Consense Mechanism :
+
+
+
+Market : 
+Target market's size, growth potential, existing trends, customer demand, and competitive landscape.
+It helps determine the viability and potential success of a product.
+
+
+Revenue potential and business viability  : 
+Forecasting potential market share and the financial viability of a product. 
+ Total Addressable Market (TAM), 
+ Serviceable Available Market (SAM),  
+ Serviceable Obtainable Market (SOM)
+ 
+ Buyer and user personas:
+ Creating detailed profiles of potential customers, including their goals, challenges, and expectations, helps guide feature prioritization and marketing strategies.
+
+Customer pain points and problems:
+
+
